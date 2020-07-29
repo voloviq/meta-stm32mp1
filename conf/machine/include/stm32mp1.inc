@@ -2,7 +2,7 @@ require conf/machine/include/soc-family.inc
 
 DEFAULTTUNE = "cortexa7thf-neon-vfpv4"
 
-SOC_FAMILY = "stm32mp1"
+SOC_FAMILY = "stm32mpcommon"
 
 PREFERRED_PROVIDER_virtual/kernel ??= "linux-mainline"
 

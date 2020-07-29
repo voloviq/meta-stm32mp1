@@ -1,6 +1,8 @@
 OpenEmbedded BSP layer for stm32mp1 boards
 ==========================================
 
+gunzip -c <IMAGE>.wic.gz | sudo dd of=/dev/sdX bs=1M  iflag=fullblock oflag=direct conv=fsync
+
 [![Build Status](http://51.75.135.20:8080/job/swupdate-dev/badge/icon)](http://51.75.135.20:8080/job/stm32mp1/)
 
 About:
