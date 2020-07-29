@@ -1205,7 +1205,7 @@ index 0000000..f969de4
 +
 diff --git b/configs/stm32mp15_visionsom_basic_defconfig b/configs/stm32mp15_visionsom_basic_defconfig
 new file mode 100644
-index 0000000..8a17aee
+index 0000000..02b8eac
 --- /dev/null
 +++ b/configs/stm32mp15_visionsom_basic_defconfig
 @@ -0,0 +1,156 @@
@@ -1264,7 +1264,7 @@ index 0000000..8a17aee
 +CONFIG_CMD_MTDPARTS=y
 +CONFIG_CMD_UBI=y
 +# CONFIG_SPL_DOS_PARTITION is not set
-+CONFIG_DEFAULT_DEVICE_TREE="stm32mp157c-ev1"
++CONFIG_DEFAULT_DEVICE_TREE="stm32mp157a-visionsom-stm32mp1_v2.1-mx"
 +CONFIG_OF_SPL_REMOVE_PROPS="interrupts interrupt-names interrupts-extended interrupt-controller \\\#interrupt-cells interrupt-parent dmas dma-names assigned-clocks assigned-clock-rates assigned-clock-parents hwlocks"
 +CONFIG_ENV_IS_NOWHERE=y
 +CONFIG_ENV_IS_IN_MMC=y
@@ -1367,7 +1367,7 @@ index 0000000..8a17aee
 +CONFIG_FDT_FIXUP_PARTITIONS=y
 diff --git b/configs/stm32mp15_visionsom_trusted_defconfig b/configs/stm32mp15_visionsom_trusted_defconfig
 new file mode 100644
-index 0000000..0a5e57e
+index 0000000..70f6ba8
 --- /dev/null
 +++ b/configs/stm32mp15_visionsom_trusted_defconfig
 @@ -0,0 +1,107 @@
@@ -1409,7 +1409,7 @@ index 0000000..0a5e57e
 +CONFIG_CMD_EXT4_WRITE=y
 +CONFIG_CMD_MTDPARTS=y
 +CONFIG_CMD_UBI=y
-+CONFIG_DEFAULT_DEVICE_TREE="stm32mp157c-ev1"
++CONFIG_DEFAULT_DEVICE_TREE="stm32mp157a-visionsom-stm32mp1_v2.1-mx"
 +CONFIG_NET_RANDOM_ETHADDR=y
 +CONFIG_STM32_ADC=y
 +CONFIG_USB_FUNCTION_FASTBOOT=y
