@@ -6,6 +6,7 @@ SOC_FAMILY = "stm32mpcommon"
 
 PREFERRED_PROVIDER_virtual/kernel ??= "linux-mainline"
 
+PREFERRED_PROVIDER_virtual/bootloader ??= "u-boot-stm32mp"
 UBOOT_SUFFIX = "img"
 UBOOT_ENTRYPOINT = "0xC2000040"
 

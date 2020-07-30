@@ -107,7 +107,7 @@ do_compile_append() {
 # -----------------------------------------------------------------------------
 # Append deploy to handle specific device tree binary deployement
 #
-do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}/bootloader"
+do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
 do_deploy_append() {
     if [ -n "${UBOOT_DEVICETREE}" ]; then
         # Clean deploydir from any available binary first
