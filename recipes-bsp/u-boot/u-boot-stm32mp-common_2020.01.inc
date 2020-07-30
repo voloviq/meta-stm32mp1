@@ -22,7 +22,7 @@ SRC_URI += "\
     file://0005-ARM-v2020.01-stm32mp-r1-CONFIG.patch \
     file://0099-Add-external-var-to-allow-build-of-new-devicetree-fi.patch \
     file://0001-Boot-from-mmc0-only.patch \
-    file://0001-add-stm32mp1-visionsom-defconfigs.patch \
+    file://0001-visionsom-add-defconfig-dsi.patch \
 "
 
 U_BOOT_VERSION = "2020.01"
