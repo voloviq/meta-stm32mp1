@@ -20,6 +20,8 @@ SYSTEM_TOOLS_INSTALL = " \
     tzdata \
     devmem2 \
     minicom \
+    linux-firmware-bluetooth-bcm4343 \
+    linux-firmware \
 "
 
 QT_TOOLS = " \
@@ -78,6 +80,11 @@ TSLIB = " \
 WIFI_SUPPORT = " \
     iw \
     wpa-supplicant \
+    bluez5 \
+    wpa-supplicant-passphrase \
+    wpa-supplicant-cli \
+    iproute2 \
+    iproute2-tc \
 "
 
 IMAGE_INSTALL += " \

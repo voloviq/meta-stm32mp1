@@ -16,6 +16,8 @@ SYSTEM_TOOLS_INSTALL = " \
     tzdata \
     devmem2 \
     minicom \
+    linux-firmware-bluetooth-bcm4343 \
+    linux-firmware \
 "
 
 KERNEL_EXTRA_INSTALL = " \
@@ -44,10 +46,6 @@ TSLIB = " \
 
 WIFI_SUPPORT = " \
     iw \
-    linux-firmware-rtl8192ce \
-    linux-firmware-rtl8192cu \
-    linux-firmware-rtl8192su \
-    linux-firmware-ralink \
     wpa-supplicant \
     bluez5 \
     wpa-supplicant-passphrase \
