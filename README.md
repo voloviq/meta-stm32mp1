@@ -1,7 +1,7 @@
 OpenEmbedded BSP layer for stm32mp1 boards
 ==========================================
 
-gunzip -c <IMAGE>.wic.gz | sudo dd of=/dev/sdX bs=1M  iflag=fullblock oflag=direct conv=fsync
+gunzip -c <IMAGE>.wic.gz | sudo dd of=/dev/sdX bs=1M iflag=fullblock oflag=direct conv=fsync
 
 [![Build Status](http://51.75.135.20:8080/job/swupdate-dev/badge/icon)](http://51.75.135.20:8080/job/stm32mp1/)
 
@@ -14,7 +14,7 @@ Dependencies:
 ------------
 	URI: git://git.openembedded.org/openembedded-core
 	layers: meta
-	branch: matched branches (e.g. master, warrior, ...)
+	branch: matched branches (e.g. master, warrior, dunfell, ...)
 
 Status of supported boards:
 --------------------------
@@ -22,6 +22,7 @@ builds and boots gpt image:
 
 	stm32mp157a-dk1
 	stm32mp157c-dk2
+	VisionSOM-STM32MP1
 
 Maintenance:
 -----------
@@ -42,3 +43,4 @@ Maintainers:
 -----------
 	Pierre-Jean Texier <pjtexier@koncepto.io>
 	Joris Offouga <offougajoris@gmail.com>
+	Michal Wolowik <m.wolowik@emsyslabs.com>
