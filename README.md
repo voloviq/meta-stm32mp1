@@ -41,7 +41,7 @@ Maintainer:
 -----------
     Michal Wolowik <m.wolowik@emsyslabs.com>
     
-Based on meta layers:
+Based on meta layer:
 -----------
 Pierre-Jean Texier <pjtexier@koncepto.io>
 Joris Offouga <offougajoris@gmail.com>
