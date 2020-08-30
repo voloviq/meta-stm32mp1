@@ -43,5 +43,5 @@ Maintainer:
     
 Based on meta layer:
 -----------
-Pierre-Jean Texier <pjtexier@koncepto.io>
-Joris Offouga <offougajoris@gmail.com>
+    Pierre-Jean Texier <pjtexier@koncepto.io>
+    Joris Offouga <offougajoris@gmail.com>
