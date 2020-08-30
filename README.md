@@ -40,3 +40,8 @@ follow-up discussions please use the GitHub's notification system.
 Maintainer:
 -----------
     Michal Wolowik <m.wolowik@emsyslabs.com>
+    
+Based on meta layers:
+-----------
+Pierre-Jean Texier <pjtexier@koncepto.io>
+Joris Offouga <offougajoris@gmail.com>
