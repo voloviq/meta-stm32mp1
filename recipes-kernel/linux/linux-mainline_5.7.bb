@@ -11,4 +11,5 @@ SRC_URI = " \
     file://0001-visionsom-add-display-powertip-ph800480t013-ibc17.patch \
     file://0001-visionsom-defconfig-dtsi-rgb.patch \
     file://overlay.cfg \
+    file://defconfig \
 "
