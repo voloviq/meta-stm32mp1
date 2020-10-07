@@ -18,7 +18,7 @@ do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_IMAGE}"
 
 #---------------------------------------------------------------
 # Module kernel signature
-KERNEL_SIGN_ENABLE ?= "0"
+KERNEL_SIGN_ENABLE ?= "1"
 EXTRA_OEMAKE += "${@oe.utils.ifelse(d.getVar('KERNEL_SIGN_ENABLE') == '1', 'INSTALL_MOD_STRIP=1','')}"
 
 #

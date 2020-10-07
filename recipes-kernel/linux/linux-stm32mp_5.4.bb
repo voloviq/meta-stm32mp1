@@ -35,6 +35,7 @@ SRC_URI += " \
     file://${LINUX_VERSION}/${LINUX_VERSION}.${LINUX_SUBVERSION}/0022-ARM-stm32mp1-r1-POWER.patch \
     file://${LINUX_VERSION}/${LINUX_VERSION}.${LINUX_SUBVERSION}/0023-ARM-stm32mp1-r1-PERF.patch \
     file://${LINUX_VERSION}/${LINUX_VERSION}.${LINUX_SUBVERSION}/0024-visionsom-defconfig-dtsi-rgb.patch \
+    file://${LINUX_VERSION}/${LINUX_VERSION}.${LINUX_SUBVERSION}/defconfig \
 "
 
 PV = "${LINUX_VERSION}.${LINUX_SUBVERSION}"
