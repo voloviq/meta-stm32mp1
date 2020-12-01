@@ -1,0 +1,48 @@
+diff --git a/Makefile b/Makefile
+index 8b390bc..fb2098a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -843,7 +843,7 @@ DO_STATIC_RELA =
+ endif
+ 
+ # Always append ALL so that arch config.mk's can add custom ones
+-ALL-y += u-boot.srec u-boot.bin u-boot.sym System.map binary_size_check
++ALL-y += u-boot.srec u-boot.bin u-boot.elf u-boot.sym System.map binary_size_check
+ 
+ ALL-$(CONFIG_ONENAND_U_BOOT) += u-boot-onenand.bin
+ ifeq ($(CONFIG_SPL_FSL_PBL),y)
+@@ -856,6 +856,7 @@ ALL-$(CONFIG_RAMBOOT_PBL) += u-boot.pbl
+ endif
+ endif
+ ALL-$(CONFIG_SPL) += spl/u-boot-spl.bin
++ALL-$(CONFIG_SPL) += spl/u-boot-spl.elf
+ ifeq ($(CONFIG_MX6)$(CONFIG_IMX_HAB), yy)
+ ALL-$(CONFIG_SPL_FRAMEWORK) += u-boot-ivt.img
+ else
+@@ -1176,9 +1177,14 @@ u-boot-elf.srec: u-boot.elf FORCE
+ 
+ OBJCOPYFLAGS_u-boot-spl.srec = $(OBJCOPYFLAGS_u-boot.srec)
+ 
++OBJCOPYFLAGS_u-boot-spl.elf = $(OBJCOPYFLAGS_u-boot.elf)
++
+ spl/u-boot-spl.srec: spl/u-boot-spl FORCE
+ 	$(call if_changed,objcopy)
+ 
++spl/u-boot-spl.elf: spl/u-boot-spl FORCE
++	$(call if_changed,objcopy)
++
+ %.scif: %.srec
+ 	$(Q)$(MAKE) $(build)=arch/arm/mach-rmobile $@
+ 
+@@ -1191,6 +1197,11 @@ OBJCOPYFLAGS_u-boot-spl.hex = $(OBJCOPYFLAGS_u-boot.hex)
+ spl/u-boot-spl.hex: spl/u-boot-spl FORCE
+ 	$(call if_changed,objcopy)
+ 
++OBJCOPYFLAGS_u-boot-spl.elf = $(OBJCOPYFLAGS_u-boot.elf)
++
++spl/u-boot-spl.elf: spl/u-boot-spl FORCE
++	$(call if_changed,objcopy)
++
+ binary_size_check: u-boot-nodtb.bin FORCE
+ 	@file_size=$(shell wc -c u-boot-nodtb.bin | awk '{print $$1}') ; \
+ 	map_size=$(shell cat u-boot.map | \

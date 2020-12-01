@@ -1,46 +1,4 @@
-From 44c04ad9a03583c1508393fcfd7a640b6521473a Mon Sep 17 00:00:00 2001
-From: Romuald JEANNE <romuald.jeanne@st.com>
-Date: Fri, 5 Jun 2020 13:43:23 +0200
-Subject: [PATCH 2/5] ARM v2020.01-stm32mp-r1 BOARD
-
----
- board/dhelectronics/dh_stm32mp1/Kconfig     |  22 +
- board/dhelectronics/dh_stm32mp1/MAINTAINERS |   7 +
- board/dhelectronics/dh_stm32mp1/Makefile    |  13 +
- board/dhelectronics/dh_stm32mp1/board.c     | 547 ++++++++++++++++++++++++
- board/st/common/Kconfig                     |  71 ++++
- board/st/common/MAINTAINERS                 |   6 +
- board/st/common/Makefile                    |  11 +
- board/st/common/cmd_stboard.c               | 176 ++++++++
- board/st/common/stm32mp_dfu.c               | 245 +++++++++++
- board/st/common/stm32mp_mtdparts.c          | 167 ++++++++
- board/st/stm32mp1/Kconfig                   |  20 +-
- board/st/stm32mp1/MAINTAINERS               |   1 -
- board/st/stm32mp1/Makefile                  |   1 -
- board/st/stm32mp1/README                    | 504 +---------------------
- board/st/stm32mp1/board.c                   |  57 ++-
- board/st/stm32mp1/cmd_stboard.c             | 145 -------
- board/st/stm32mp1/stm32mp1.c                | 426 +++++++------------
- board/sunxi/board.c                         |   2 +-
- doc/board/index.rst                         |   1 +
- doc/board/st/index.rst                      |   9 +
- doc/board/st/stm32mp1.rst                   | 624 ++++++++++++++++++++++++++++
- 21 files changed, 2103 insertions(+), 952 deletions(-)
- create mode 100644 board/dhelectronics/dh_stm32mp1/Kconfig
- create mode 100644 board/dhelectronics/dh_stm32mp1/MAINTAINERS
- create mode 100644 board/dhelectronics/dh_stm32mp1/Makefile
- create mode 100644 board/dhelectronics/dh_stm32mp1/board.c
- create mode 100644 board/st/common/Kconfig
- create mode 100644 board/st/common/MAINTAINERS
- create mode 100644 board/st/common/Makefile
- create mode 100644 board/st/common/cmd_stboard.c
- create mode 100644 board/st/common/stm32mp_dfu.c
- create mode 100644 board/st/common/stm32mp_mtdparts.c
- delete mode 100644 board/st/stm32mp1/cmd_stboard.c
- create mode 100644 doc/board/st/index.rst
- create mode 100644 doc/board/st/stm32mp1.rst
-
-diff --git a/board/dhelectronics/dh_stm32mp1/Kconfig b/board/dhelectronics/dh_stm32mp1/Kconfig
+diff --git b/board/dhelectronics/dh_stm32mp1/Kconfig b/board/dhelectronics/dh_stm32mp1/Kconfig
 new file mode 100644
 index 0000000..69cc48f
 --- /dev/null
@@ -68,7 +26,7 @@ index 0000000..69cc48f
 +
 +source "board/st/common/Kconfig"
 +endif
-diff --git a/board/dhelectronics/dh_stm32mp1/MAINTAINERS b/board/dhelectronics/dh_stm32mp1/MAINTAINERS
+diff --git b/board/dhelectronics/dh_stm32mp1/MAINTAINERS b/board/dhelectronics/dh_stm32mp1/MAINTAINERS
 new file mode 100644
 index 0000000..1511ecb
 --- /dev/null
@@ -81,7 +39,7 @@ index 0000000..1511ecb
 +F:	board/dhelectronics/dh_stm32mp1/
 +F:	configs/stm32mp15_dhcom_basic_defconfig
 +F:	include/configs/stm32mp1.h
-diff --git a/board/dhelectronics/dh_stm32mp1/Makefile b/board/dhelectronics/dh_stm32mp1/Makefile
+diff --git b/board/dhelectronics/dh_stm32mp1/Makefile b/board/dhelectronics/dh_stm32mp1/Makefile
 new file mode 100644
 index 0000000..e8f218d
 --- /dev/null
@@ -100,7 +58,7 @@ index 0000000..e8f218d
 +
 +obj-$(CONFIG_SYS_MTDPARTS_RUNTIME) += ../../st/common/stm32mp_mtdparts.o
 +obj-$(CONFIG_SET_DFU_ALT_INFO) += ../../st/common/stm32mp_dfu.o
-diff --git a/board/dhelectronics/dh_stm32mp1/board.c b/board/dhelectronics/dh_stm32mp1/board.c
+diff --git b/board/dhelectronics/dh_stm32mp1/board.c b/board/dhelectronics/dh_stm32mp1/board.c
 new file mode 100644
 index 0000000..53325e8
 --- /dev/null
@@ -653,7 +611,7 @@ index 0000000..53325e8
 +}
 +
 +U_BOOT_FIT_LOADABLE_HANDLER(IH_TYPE_COPRO, board_copro_image_process);
-diff --git a/board/st/common/Kconfig b/board/st/common/Kconfig
+diff --git b/board/st/common/Kconfig b/board/st/common/Kconfig
 new file mode 100644
 index 0000000..750dbb6
 --- /dev/null
@@ -730,7 +688,7 @@ index 0000000..750dbb6
 +	depends on ARCH_STM32MP && SET_DFU_ALT_INFO
 +	help
 +	  This defines the partitions of ram used to build dfu dynamically.
-diff --git a/board/st/common/MAINTAINERS b/board/st/common/MAINTAINERS
+diff --git b/board/st/common/MAINTAINERS b/board/st/common/MAINTAINERS
 new file mode 100644
 index 0000000..3b02f4a
 --- /dev/null
@@ -742,9 +700,9 @@ index 0000000..3b02f4a
 +T:	git https://gitlab.denx.de/u-boot/custodians/u-boot-stm.git
 +S:	Maintained
 +F:	board/st/common/
-diff --git a/board/st/common/Makefile b/board/st/common/Makefile
+diff --git b/board/st/common/Makefile b/board/st/common/Makefile
 new file mode 100644
-index 0000000..aa030bac
+index 0000000..aa030ba
 --- /dev/null
 +++ b/board/st/common/Makefile
 @@ -0,0 +1,11 @@
@@ -759,81 +717,66 @@ index 0000000..aa030bac
 +obj-$(CONFIG_SYS_MTDPARTS_RUNTIME) += stm32mp_mtdparts.o
 +obj-$(CONFIG_SET_DFU_ALT_INFO) += stm32mp_dfu.o
 +endif
-diff --git a/board/st/common/cmd_stboard.c b/board/st/common/cmd_stboard.c
-new file mode 100644
-index 0000000..3ead1ed
---- /dev/null
+diff --git a/board/st/stm32mp1/cmd_stboard.c b/board/st/common/cmd_stboard.c
+similarity index 67%
+rename from a/board/st/stm32mp1/cmd_stboard.c
+rename to b/board/st/common/cmd_stboard.c
+index 04352ae..3ead1ed 100644
+--- a/board/st/stm32mp1/cmd_stboard.c
 +++ b/board/st/common/cmd_stboard.c
-@@ -0,0 +1,176 @@
-+// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-+/*
-+ * Copyright (C) 2019, STMicroelectronics - All Rights Reserved
-+ */
-+
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2019, STMicroelectronics - All Rights Reserved
+  */
+ 
 +#ifndef CONFIG_SPL_BUILD
-+#include <common.h>
-+#include <console.h>
-+#include <misc.h>
-+#include <dm/device.h>
-+#include <dm/uclass.h>
-+
-+static bool check_stboard(u16 board)
-+{
-+	unsigned int i;
-+	const u16 st_board_id[] = {
-+		0x1272,
-+		0x1263,
-+		0x1264,
-+		0x1298,
-+		0x1341,
-+		0x1497,
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(st_board_id); i++)
-+		if (board == st_board_id[i])
-+			return true;
-+
-+	return false;
-+}
-+
-+static void display_stboard(u32 otp)
-+{
+ #include <common.h>
+ #include <console.h>
+ #include <misc.h>
+@@ -30,9 +31,10 @@ static bool check_stboard(u16 board)
+ 
+ static void display_stboard(u32 otp)
+ {
+-	printf("Board: MB%04x Var%d Rev.%c-%02d\n",
 +	printf("Board: MB%04x Var%d.%d Rev.%c-%02d\n",
-+	       otp >> 16,
-+	       (otp >> 12) & 0xF,
+ 	       otp >> 16,
+ 	       (otp >> 12) & 0xF,
 +	       (otp >> 4) & 0xF,
-+	       ((otp >> 8) & 0xF) - 1 + 'A',
-+	       otp & 0xF);
-+}
-+
-+static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
-+		      char * const argv[])
-+{
-+	int ret;
+ 	       ((otp >> 8) & 0xF) - 1 + 'A',
+ 	       otp & 0xF);
+ }
+@@ -41,23 +43,23 @@ static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
+ 		      char * const argv[])
+ {
+ 	int ret;
+-	u32 otp;
 +	u32 otp, lock;
-+	u8 revision;
+ 	u8 revision;
+-	unsigned long board, variant, bom;
 +	unsigned long board, var_cpn, var_fg, bom;
-+	struct udevice *dev;
+ 	struct udevice *dev;
+-	int confirmed = argc == 6 && !strcmp(argv[1], "-y");
 +	int confirmed = argc == 7 && !strcmp(argv[1], "-y");
-+
-+	argc -= 1 + confirmed;
-+	argv += 1 + confirmed;
-+
+ 
+ 	argc -= 1 + confirmed;
+ 	argv += 1 + confirmed;
+ 
+-	if (argc != 0 && argc != 4)
 +	if (argc != 0 && argc != 5)
-+		return CMD_RET_USAGE;
-+
-+	ret = uclass_get_device_by_driver(UCLASS_MISC,
-+					  DM_GET_DRIVER(stm32mp_bsec),
-+					  &dev);
-+
+ 		return CMD_RET_USAGE;
+ 
+ 	ret = uclass_get_device_by_driver(UCLASS_MISC,
+ 					  DM_GET_DRIVER(stm32mp_bsec),
+ 					  &dev);
+ 
+-	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_BOARD),
 +	ret = misc_read(dev, STM32_BSEC_OTP(BSEC_OTP_BOARD),
-+			&otp, sizeof(otp));
-+
-+	if (ret < 0) {
-+		puts("OTP read error");
-+		return CMD_RET_FAILURE;
-+	}
-+
+ 			&otp, sizeof(otp));
+ 
+ 	if (ret < 0) {
+@@ -65,11 +67,20 @@ static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
+ 		return CMD_RET_FAILURE;
+ 	}
+ 
 +	ret = misc_read(dev, STM32_BSEC_LOCK(BSEC_OTP_BOARD),
 +			&lock, sizeof(lock));
 +	if (ret < 0) {
@@ -841,40 +784,32 @@ index 0000000..3ead1ed
 +		return CMD_RET_FAILURE;
 +	}
 +
-+	if (argc == 0) {
-+		if (!otp)
-+			puts("Board : OTP board FREE\n");
-+		else
-+			display_stboard(otp);
+ 	if (argc == 0) {
+ 		if (!otp)
+ 			puts("Board : OTP board FREE\n");
+ 		else
+ 			display_stboard(otp);
 +		printf("      OTP %d %s locked !\n", BSEC_OTP_BOARD,
 +		       lock == 1 ? "" : "NOT");
-+		return CMD_RET_SUCCESS;
-+	}
-+
-+	if (otp) {
-+		display_stboard(otp);
-+		printf("ERROR: OTP board not FREE\n");
-+		return CMD_RET_FAILURE;
-+	}
-+
-+	if (strict_strtoul(argv[0], 16, &board) < 0 ||
-+	    board == 0 || board > 0xFFFF) {
-+		printf("argument %d invalid: %s\n", 1, argv[0]);
-+		return CMD_RET_USAGE;
-+	}
-+
+ 		return CMD_RET_SUCCESS;
+ 	}
+ 
+@@ -85,8 +96,8 @@ static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
+ 		return CMD_RET_USAGE;
+ 	}
+ 
+-	if (strict_strtoul(argv[1], 10, &variant) < 0 ||
+-	    variant == 0 || variant > 15) {
 +	if (strict_strtoul(argv[1], 10, &var_cpn) < 0 ||
 +	    var_cpn == 0 || var_cpn > 15) {
-+		printf("argument %d invalid: %s\n", 2, argv[1]);
-+		return CMD_RET_USAGE;
-+	}
-+
-+	revision = argv[2][0] - 'A' + 1;
-+	if (strlen(argv[2]) > 1 || revision == 0 || revision > 15) {
-+		printf("argument %d invalid: %s\n", 3, argv[2]);
-+		return CMD_RET_USAGE;
-+	}
-+
+ 		printf("argument %d invalid: %s\n", 2, argv[1]);
+ 		return CMD_RET_USAGE;
+ 	}
+@@ -97,13 +108,20 @@ static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
+ 		return CMD_RET_USAGE;
+ 	}
+ 
+-	if (strict_strtoul(argv[3], 10, &bom) < 0 ||
 +	if (strict_strtoul(argv[3], 10, &var_fg) < 0 ||
 +	    var_fg > 15) {
 +		printf("argument %d invalid: %s\n", 4, argv[3]);
@@ -882,37 +817,26 @@ index 0000000..3ead1ed
 +	}
 +
 +	if (strict_strtoul(argv[4], 10, &bom) < 0 ||
-+	    bom == 0 || bom > 15) {
-+		printf("argument %d invalid: %s\n", 4, argv[3]);
-+		return CMD_RET_USAGE;
-+	}
-+
+ 	    bom == 0 || bom > 15) {
+ 		printf("argument %d invalid: %s\n", 4, argv[3]);
+ 		return CMD_RET_USAGE;
+ 	}
+ 
+-	otp = (board << 16) | (variant << 12) | (revision << 8) | bom;
 +	otp = (board << 16) | (var_cpn << 12) | (revision << 8) |
 +	      (var_fg << 4) | bom;
-+	display_stboard(otp);
-+	printf("=> OTP[%d] = %08X\n", BSEC_OTP_BOARD, otp);
-+
-+	if (!check_stboard((u16)board)) {
-+		printf("Unknown board MB%04x\n", (u16)board);
-+		return CMD_RET_FAILURE;
-+	}
-+	if (!confirmed) {
-+		printf("Warning: Programming BOARD in OTP is irreversible!\n");
-+		printf("Really perform this OTP programming? <y/N>\n");
-+
-+		if (!confirm_yesno()) {
-+			puts("BOARD programming aborted\n");
-+			return CMD_RET_FAILURE;
-+		}
-+	}
-+
-+	ret = misc_write(dev, STM32_BSEC_OTP(BSEC_OTP_BOARD),
-+			 &otp, sizeof(otp));
-+
+ 	display_stboard(otp);
+ 	printf("=> OTP[%d] = %08X\n", BSEC_OTP_BOARD, otp);
+ 
+@@ -124,22 +142,35 @@ static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
+ 	ret = misc_write(dev, STM32_BSEC_OTP(BSEC_OTP_BOARD),
+ 			 &otp, sizeof(otp));
+ 
+-	if (ret) {
 +	if (ret < 0) {
-+		puts("BOARD programming error\n");
-+		return CMD_RET_FAILURE;
-+	}
+ 		puts("BOARD programming error\n");
+ 		return CMD_RET_FAILURE;
+ 	}
 +
 +	/* write persistent lock */
 +	otp = 1;
@@ -923,25 +847,28 @@ index 0000000..3ead1ed
 +		return CMD_RET_FAILURE;
 +	}
 +
-+	puts("BOARD programming done\n");
-+
-+	return CMD_RET_SUCCESS;
-+}
-+
+ 	puts("BOARD programming done\n");
+ 
+ 	return CMD_RET_SUCCESS;
+ }
+ 
+-U_BOOT_CMD(stboard, 6, 0, do_stboard,
 +U_BOOT_CMD(stboard, 7, 0, do_stboard,
-+	   "read/write board reference in OTP",
-+	   "\n"
-+	   "  Print current board information\n"
+ 	   "read/write board reference in OTP",
+ 	   "\n"
+ 	   "  Print current board information\n"
+-	   "stboard [-y] <Board> <Variant> <Revision> <BOM>\n"
 +	   "stboard [-y] <Board> <VarCPN> <Revision> <VarFG> <BOM>\n"
-+	   "  Write board information\n"
-+	   "  - Board: xxxx, example 1264 for MB1264\n"
+ 	   "  Write board information\n"
+ 	   "  - Board: xxxx, example 1264 for MB1264\n"
+-	   "  - Variant: 1 ... 15\n"
 +	   "  - VarCPN: 1...15\n"
-+	   "  - Revision: A...O\n"
+ 	   "  - Revision: A...O\n"
 +	   "  - VarFG: 0...15\n"
-+	   "  - BOM: 1...15\n");
+ 	   "  - BOM: 1...15\n");
 +
 +#endif
-diff --git a/board/st/common/stm32mp_dfu.c b/board/st/common/stm32mp_dfu.c
+diff --git b/board/st/common/stm32mp_dfu.c b/board/st/common/stm32mp_dfu.c
 new file mode 100644
 index 0000000..3bd005b
 --- /dev/null
@@ -1192,7 +1119,7 @@ index 0000000..3bd005b
 +}
 +
 +#endif
-diff --git a/board/st/common/stm32mp_mtdparts.c b/board/st/common/stm32mp_mtdparts.c
+diff --git b/board/st/common/stm32mp_mtdparts.c b/board/st/common/stm32mp_mtdparts.c
 new file mode 100644
 index 0000000..9f5897f
 --- /dev/null
@@ -2020,157 +1947,6 @@ index c3d832f..3e38aef 100644
  		if (ret < 0)
  			return ret;
  
-diff --git a/board/st/stm32mp1/cmd_stboard.c b/board/st/stm32mp1/cmd_stboard.c
-deleted file mode 100644
-index 04352ae..0000000
---- a/board/st/stm32mp1/cmd_stboard.c
-+++ /dev/null
-@@ -1,145 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
--/*
-- * Copyright (C) 2019, STMicroelectronics - All Rights Reserved
-- */
--
--#include <common.h>
--#include <console.h>
--#include <misc.h>
--#include <dm/device.h>
--#include <dm/uclass.h>
--
--static bool check_stboard(u16 board)
--{
--	unsigned int i;
--	const u16 st_board_id[] = {
--		0x1272,
--		0x1263,
--		0x1264,
--		0x1298,
--		0x1341,
--		0x1497,
--	};
--
--	for (i = 0; i < ARRAY_SIZE(st_board_id); i++)
--		if (board == st_board_id[i])
--			return true;
--
--	return false;
--}
--
--static void display_stboard(u32 otp)
--{
--	printf("Board: MB%04x Var%d Rev.%c-%02d\n",
--	       otp >> 16,
--	       (otp >> 12) & 0xF,
--	       ((otp >> 8) & 0xF) - 1 + 'A',
--	       otp & 0xF);
--}
--
--static int do_stboard(cmd_tbl_t *cmdtp, int flag, int argc,
--		      char * const argv[])
--{
--	int ret;
--	u32 otp;
--	u8 revision;
--	unsigned long board, variant, bom;
--	struct udevice *dev;
--	int confirmed = argc == 6 && !strcmp(argv[1], "-y");
--
--	argc -= 1 + confirmed;
--	argv += 1 + confirmed;
--
--	if (argc != 0 && argc != 4)
--		return CMD_RET_USAGE;
--
--	ret = uclass_get_device_by_driver(UCLASS_MISC,
--					  DM_GET_DRIVER(stm32mp_bsec),
--					  &dev);
--
--	ret = misc_read(dev, STM32_BSEC_SHADOW(BSEC_OTP_BOARD),
--			&otp, sizeof(otp));
--
--	if (ret < 0) {
--		puts("OTP read error");
--		return CMD_RET_FAILURE;
--	}
--
--	if (argc == 0) {
--		if (!otp)
--			puts("Board : OTP board FREE\n");
--		else
--			display_stboard(otp);
--		return CMD_RET_SUCCESS;
--	}
--
--	if (otp) {
--		display_stboard(otp);
--		printf("ERROR: OTP board not FREE\n");
--		return CMD_RET_FAILURE;
--	}
--
--	if (strict_strtoul(argv[0], 16, &board) < 0 ||
--	    board == 0 || board > 0xFFFF) {
--		printf("argument %d invalid: %s\n", 1, argv[0]);
--		return CMD_RET_USAGE;
--	}
--
--	if (strict_strtoul(argv[1], 10, &variant) < 0 ||
--	    variant == 0 || variant > 15) {
--		printf("argument %d invalid: %s\n", 2, argv[1]);
--		return CMD_RET_USAGE;
--	}
--
--	revision = argv[2][0] - 'A' + 1;
--	if (strlen(argv[2]) > 1 || revision == 0 || revision > 15) {
--		printf("argument %d invalid: %s\n", 3, argv[2]);
--		return CMD_RET_USAGE;
--	}
--
--	if (strict_strtoul(argv[3], 10, &bom) < 0 ||
--	    bom == 0 || bom > 15) {
--		printf("argument %d invalid: %s\n", 4, argv[3]);
--		return CMD_RET_USAGE;
--	}
--
--	otp = (board << 16) | (variant << 12) | (revision << 8) | bom;
--	display_stboard(otp);
--	printf("=> OTP[%d] = %08X\n", BSEC_OTP_BOARD, otp);
--
--	if (!check_stboard((u16)board)) {
--		printf("Unknown board MB%04x\n", (u16)board);
--		return CMD_RET_FAILURE;
--	}
--	if (!confirmed) {
--		printf("Warning: Programming BOARD in OTP is irreversible!\n");
--		printf("Really perform this OTP programming? <y/N>\n");
--
--		if (!confirm_yesno()) {
--			puts("BOARD programming aborted\n");
--			return CMD_RET_FAILURE;
--		}
--	}
--
--	ret = misc_write(dev, STM32_BSEC_OTP(BSEC_OTP_BOARD),
--			 &otp, sizeof(otp));
--
--	if (ret) {
--		puts("BOARD programming error\n");
--		return CMD_RET_FAILURE;
--	}
--	puts("BOARD programming done\n");
--
--	return CMD_RET_SUCCESS;
--}
--
--U_BOOT_CMD(stboard, 6, 0, do_stboard,
--	   "read/write board reference in OTP",
--	   "\n"
--	   "  Print current board information\n"
--	   "stboard [-y] <Board> <Variant> <Revision> <BOM>\n"
--	   "  Write board information\n"
--	   "  - Board: xxxx, example 1264 for MB1264\n"
--	   "  - Variant: 1 ... 15\n"
--	   "  - Revision: A...O\n"
--	   "  - BOM: 1...15\n");
 diff --git a/board/st/stm32mp1/stm32mp1.c b/board/st/stm32mp1/stm32mp1.c
 index cee3500..617d05d 100644
 --- a/board/st/stm32mp1/stm32mp1.c
@@ -2800,7 +2576,7 @@ index 00e72f5..21fddd2 100644
     sifive/index
 +   st/index
     xilinx/index
-diff --git a/doc/board/st/index.rst b/doc/board/st/index.rst
+diff --git b/doc/board/st/index.rst b/doc/board/st/index.rst
 new file mode 100644
 index 0000000..91f1d51
 --- /dev/null
@@ -2815,7 +2591,7 @@ index 0000000..91f1d51
 +   :maxdepth: 2
 +
 +   stm32mp1
-diff --git a/doc/board/st/stm32mp1.rst b/doc/board/st/stm32mp1.rst
+diff --git b/doc/board/st/stm32mp1.rst b/doc/board/st/stm32mp1.rst
 new file mode 100644
 index 0000000..62de184
 --- /dev/null
@@ -3445,6 +3221,3 @@ index 0000000..62de184
 +  $> dfu-util -d 0483:5720 -a 23 -D u-boot-stm32mp157c-ev1-trusted.img
 +  $> dfu-util -d 0483:5720 -a 24 -D u-boot-stm32mp157c-ev1-trusted.img
 +  $> dfu-util -d 0483:5720 -a 25 -D st-image-weston-openstlinux-weston-stm32mp1_nand_4_256_multivolume.ubi
--- 
-2.7.4
-
